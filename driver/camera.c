@@ -1006,7 +1006,7 @@ esp_err_t camera_probe(const camera_config_t* config, camera_model_t* out_camera
 
     ESP_LOGD(TAG, "Searching for camera address");
     vTaskDelay(10 / portTICK_PERIOD_MS);
-    uint8_t slv_addr = SCCB_Probe();
+    uint8_t slv_addr = 0x30; //SCCB_Probe();
     if (slv_addr == 0) {
         *out_camera_model = CAMERA_NONE;
         camera_disable_out_clock();
@@ -1024,7 +1024,7 @@ esp_err_t camera_probe(const camera_config_t* config, camera_model_t* out_camera
         SCCB_Write(0x30, 0xFF, 0x01);//bank sensor
         SCCB_Write(0x30, 0x12, 0x80);//reset
         vTaskDelay(10 / portTICK_PERIOD_MS);
-        slv_addr = SCCB_Probe();
+        // slv_addr = SCCB_Probe();
     }
 #endif
 #if CONFIG_NT99141_SUPPORT
